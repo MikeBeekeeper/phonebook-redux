@@ -1,31 +1,49 @@
-import PropTypes from 'prop-types';
 import css from '../contactList/contactList.module.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { remove } from 'redux/slice';
 
-const ContactList = ({ contacts, onDeleteContact }) => {
+const ContactList = () => {
+  const contacts = useSelector(state => state.contacts);
+  const filterValue = useSelector(state => state.filter);
+  const dispatch = useDispatch();
+
+  const getContacts = (contacts, filterValue) => {
+    if (filterValue) {
+      const normalazedContact = filterValue.toLowerCase();
+      return contacts.filter(contact =>
+        contact.userName.toLowerCase().includes(normalazedContact)
+      );
+    }
+    return contacts;
+  };
+
+  const visibleContacts = getContacts(contacts, filterValue);
+
   return (
-    <ul className={css.contactList}>
-      {contacts.map(contact => (
-        <li key={contact.id} className={css.contactListItem}>
-          <div>
-            {' '}
-            {contact.name}: {contact.number}
-          </div>
-          <button
-            type="button"
-            className={css.deleteBtn}
-            onClick={() => onDeleteContact(contact.id)}
-          >
-            Delete
-          </button>
-        </li>
-      ))}
-    </ul>
+    <>
+      {contacts.length === 0 && <div>Your contacts will be here</div>}
+      {contacts.length > 0 && (
+        <ul className={css.contactList}>
+          {visibleContacts.map(({ id, userName, userNumber }) => (
+            <li key={id} className={css.contactListItem}>
+              <div>
+                {userName} : {userNumber}
+              </div>
+              <button
+                type="button"
+                className={css.deleteBtn}
+                onClick={() => {
+                  dispatch(remove(id));
+                }}
+              >
+                Delete
+              </button>
+            </li>
+          ))}
+        </ul>
+      )}
+    </>
   );
-};
-
-ContactList.propTypes = {
-  contacts: PropTypes.array.isRequired,
-  onDeleteContact: PropTypes.func.isRequired,
 };
 
 export default ContactList;

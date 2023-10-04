@@ -3,10 +3,26 @@ import React, { useState } from 'react';
 
 import { nanoid } from 'nanoid';
 import css from './contactForm.module.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { add } from 'redux/slice';
 
-const ContactForm = ({ onSubmit }) => {
+const ContactForm = () => {
+  const dispatch = useDispatch();
+
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
+
+  const handleClick = e => {
+    e.preventDefault();
+    const user = {
+      id: nanoid(),
+      userName: e.currentTarget.elements.name.value,
+      userNumber: e.currentTarget.elements.number.value,
+    };
+
+    dispatch(add(user));
+    reset();
+  };
 
   const nameInputId = nanoid();
   const numberInputId = nanoid();
@@ -24,19 +40,13 @@ const ContactForm = ({ onSubmit }) => {
     }
   };
 
-  const handleSubmit = e => {
-    e.preventDefault();
-    onSubmit({ name, number });
-    reset();
-  };
-
   const reset = () => {
     setName('');
     setNumber('');
   };
 
   return (
-    <form className={css.form} onSubmit={handleSubmit}>
+    <form className={css.form} onSubmit={handleClick}>
       <label htmlFor={nameInputId}> Name</label>
       <input
         className={css.formInput}
@@ -47,7 +57,7 @@ const ContactForm = ({ onSubmit }) => {
         onChange={handleChange}
         // pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
         title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
-        required
+        // required
       />
 
       <label htmlFor={numberInputId}> Number</label>
@@ -60,17 +70,13 @@ const ContactForm = ({ onSubmit }) => {
         onChange={handleChange}
         // pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
         title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
-        required
+        // required
       />
       <button type="submit" className={css.submitBtn}>
         Add contact
       </button>
     </form>
   );
-};
-
-ContactForm.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
 };
 
 export default ContactForm;
