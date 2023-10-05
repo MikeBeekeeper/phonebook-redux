@@ -5,10 +5,10 @@ export const myContactsSlice = createSlice({
   initialState: [],
   reducers: {
     add(state, action) {
-      state.push(action.payload);
+        state.push(action.payload);
     },
     remove(state, action) {
-      return state.filter(el => el.id !== action.payload);
+    return state.filter(el => el.id !== action.payload);
     },
   },
 });

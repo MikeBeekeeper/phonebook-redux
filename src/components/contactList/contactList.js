@@ -21,8 +21,7 @@ const ContactList = () => {
 
   return (
     <>
-      {contacts.length === 0 && <div>Your contacts will be here</div>}
-      {contacts.length > 0 && (
+      {contacts && (
         <ul className={css.contactList}>
           {visibleContacts.map(({ id, userName, userNumber }) => (
             <li key={id} className={css.contactListItem}>
