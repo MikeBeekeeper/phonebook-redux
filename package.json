@@ -1,8 +1,8 @@
 {
-  "name": "goit-react-hw-06-feedback",
+  "name": "goit-react-hw-06-phonebook",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://MikeBeekeeper.github.io/goit-react-hw-06-feedback/",
+  "homepage": "https://MikeBeekeeper.github.io/goit-react-hw-06-phonebook/",
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.6",
     "@testing-library/jest-dom": "^5.16.3",
