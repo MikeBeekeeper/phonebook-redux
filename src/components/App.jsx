@@ -2,13 +2,12 @@ import css from './App.module.css';
 import ContactForm from './contactForm/contactForm.js';
 import Filter from './filter/filter.js';
 import ContactList from './contactList/contactList.js';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 export const App = () => {
-  const dispatch = useDispatch();
 
   const contacts = useSelector(state => state.contacts);
-console.log(contacts)
+
   return (
     <>
       <div className={css.app}>
