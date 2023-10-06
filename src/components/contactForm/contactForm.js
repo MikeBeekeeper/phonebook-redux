@@ -20,7 +20,7 @@ const ContactForm = () => {
       userNumber: e.currentTarget.elements.number.value,
     };
 
-    if(contacts.find(el=>el.userName === user.userName)) return alert(`That contact name is already in your phonebook`)
+    if(contacts.find(el=>el.userName === user.userName)) return alert(`Contact ${user.userName} is already in your phonebook`)
 
     dispatch(add(user));
     reset();
